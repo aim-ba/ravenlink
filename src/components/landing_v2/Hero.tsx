@@ -17,6 +17,17 @@ type HeroProps = {
 
 export function Hero({ onBrowseJobs }: HeroProps) {
   const [qrOpen, setQrOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024); // lg breakpoint
+    };
+
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
   return (
     <section className="relative py-16 sm:py-20 lg:py-26 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Subtle gradient background */}
@@ -82,10 +93,10 @@ export function Hero({ onBrowseJobs }: HeroProps) {
             className="relative"
           >
             <Card className="p-6 lg:p-8 border-2 shadow-xl">
-              <Collapsible open={qrOpen} onOpenChange={setQrOpen}>
+              <Collapsible open={isDesktop || qrOpen} onOpenChange={isDesktop ? undefined : setQrOpen}>
                 <div className="space-y-4 lg:space-y-6">
-                  <CollapsibleTrigger className="w-full lg:cursor-default">
-                    <div className="flex items-center justify-between gap-3 pb-3 lg:pb-4 border-b">
+                  <CollapsibleTrigger asChild disabled={isDesktop}>
+                    <div className={`flex items-center justify-between gap-3 pb-3 lg:pb-4 border-b ${!isDesktop ? 'cursor-pointer' : ''}`}>
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                           <QrCode className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
@@ -101,7 +112,7 @@ export function Hero({ onBrowseJobs }: HeroProps) {
                     </div>
                   </CollapsibleTrigger>
 
-                  <CollapsibleContent className="lg:!block">
+                  <CollapsibleContent>
                     {/* QR Code */}
                     <div className="flex justify-center py-2 lg:py-4">
                       <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 bg-white rounded-xl p-3 lg:p-4 border-2 border-dashed border-border">
