@@ -7,3 +7,4 @@ services:
   name: ravenlink
   build_command: npm run build
   run_command: npm start
+  output_dir: _static
