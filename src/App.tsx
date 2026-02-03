@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { ScrollToTop } from './components/ScrollToTop';
 import { HomePage, OpportunitiesPage, AboutPage } from './pages';
 
 /**
@@ -12,6 +13,7 @@ import { HomePage, OpportunitiesPage, AboutPage } from './pages';
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-background text-foreground transition-colors">
         <Header />
         <main>
