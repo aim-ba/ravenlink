@@ -1,10 +1,9 @@
 name: ravenlink
-services:
+static_sites:
 - environment_slug: node-js
   github:
     branch: main
     deploy_on_push: true
   name: ravenlink
   build_command: npm run build
-  run_command: npm start
   output_dir: _static
