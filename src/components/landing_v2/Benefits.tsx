@@ -9,49 +9,37 @@ const benefits = [
     icon: Target,
     title: "Build relationships",
     description: "Strengthen partnerships with Indigenous communities through meaningful engagement and inclusion",
-    gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
-    bgColor: "bg-blue-500/10",
-    iconColor: "text-blue-600"
+    chartColor: "chart-1"
   },
   {
     icon: Sparkles,
     title: "Increase certainty",
     description: "Develop and operate projects within Traditional Territories through collaborative partnerships",
-    gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
-    bgColor: "bg-purple-500/10",
-    iconColor: "text-purple-600"
+    chartColor: "chart-2"
   },
   {
     icon: BarChart3,
     title: "Meet ESG targets",
     description: "Create a strong framework for standardized reporting across all projects",
-    gradient: "bg-gradient-to-br from-green-500 to-green-600",
-    bgColor: "bg-green-500/10",
-    iconColor: "text-green-600"
+    chartColor: "chart-3"
   },
   {
     icon: Shield,
     title: "Ensure compliance",
     description: "Automated tracking and reporting ensures regulatory requirements are met",
-    gradient: "bg-gradient-to-br from-orange-500 to-orange-600",
-    bgColor: "bg-orange-500/10",
-    iconColor: "text-orange-600"
+    chartColor: "chart-4"
   },
   {
     icon: Users,
     title: "Support communities",
     description: "Direct economic benefits and employment opportunities for Indigenous communities",
-    gradient: "bg-gradient-to-br from-pink-500 to-pink-600",
-    bgColor: "bg-pink-500/10",
-    iconColor: "text-pink-600"
+    chartColor: "chart-5"
   },
   {
     icon: Award,
     title: "Quality assurance",
     description: "Pre-qualified vendors with verified capabilities for project success",
-    gradient: "bg-gradient-to-br from-indigo-500 to-indigo-600",
-    bgColor: "bg-indigo-500/10",
-    iconColor: "text-indigo-600"
+    chartColor: "chart-1"
   }
 ];
 
@@ -60,7 +48,7 @@ export function Benefits() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-32 px-4 sm:px-6 lg:px-8 bg-background">
+    <section ref={ref} className="py-26 px-4 sm:px-6 lg:px-8 bg-muted/50">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -82,15 +70,6 @@ export function Benefits() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
-            const colors = [
-              { bg: "bg-blue-500/10", icon: "text-blue-600", gradient: "bg-gradient-to-br from-blue-500 to-blue-600" },
-              { bg: "bg-purple-500/10", icon: "text-purple-600", gradient: "bg-gradient-to-br from-purple-500 to-purple-600" },
-              { bg: "bg-green-500/10", icon: "text-green-600", gradient: "bg-gradient-to-br from-green-500 to-green-600" },
-              { bg: "bg-orange-500/10", icon: "text-orange-600", gradient: "bg-gradient-to-br from-orange-500 to-orange-600" },
-              { bg: "bg-pink-500/10", icon: "text-pink-600", gradient: "bg-gradient-to-br from-pink-500 to-pink-600" },
-              { bg: "bg-indigo-500/10", icon: "text-indigo-600", gradient: "bg-gradient-to-br from-indigo-500 to-indigo-600" }
-            ];
-            const color = colors[index];
             return (
               <motion.div
                 key={benefit.title}
@@ -100,8 +79,16 @@ export function Benefits() {
               >
                 <Card className="p-6 h-full border hover:border-primary/50 transition-all hover:shadow-lg group">
                   <div className="space-y-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${color.bg}`}>
-                      <Icon className={`w-6 h-6 ${color.icon} transition-colors`} />
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center transition-all"
+                      style={{
+                        backgroundColor: `oklch(from var(--${benefit.chartColor}) l c h / 0.1)`
+                      }}
+                    >
+                      <Icon
+                        className="w-6 h-6 transition-colors"
+                        style={{ color: `var(--${benefit.chartColor})` }}
+                      />
                     </div>
                     <h3 className="text-lg font-semibold text-foreground">
                       {benefit.title}

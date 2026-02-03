@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, Loader2, Lock, UserPlus } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import type { UserRole } from '../lib/api';
 
 type LoginModalProps = {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Hero, Stats, Features, HowItWorks, Benefits, CTA } from '../components/landing_v2';
+import { Hero, Stats, Features, Benefits, CTA } from '../components/landing_v2';
 
 export function HomePage() {
   const navigate = useNavigate();

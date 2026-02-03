@@ -1,6 +1,3 @@
-import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite'
-
 export default {
   darkMode: ["class"],
   content: [
@@ -10,5 +7,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: tailwindcss(),
+  plugins: [],
 };

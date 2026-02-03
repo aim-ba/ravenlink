@@ -4,240 +4,206 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Ravenlink** (Indigenous Opportunities & Contracting System) is a React-based web application facilitating Indigenous engagement and ESG reporting for infrastructure projects. The system connects three user roles: Admins, Project Proponents, and Contractors, managing job opportunities, applications, workforce tracking, and project management.
+**Raven** - Indigenous Opportunities & Contracting System
+A React + TypeScript web application for facilitating Indigenous engagement and transparent ESG reporting for major infrastructure projects.
 
-This is a Vite-based React application that was migrated from Create React App, deployed on DigitalOcean App Platform.
+**Tech Stack:** React 19.2.4, TypeScript 5.9.3, Vite 7.3.1, Tailwind CSS v4.1.18, React Router v7.13.0
 
-## Development Commands
+## Common Commands
 
-### Local Development
+### Development
 ```bash
 npm run dev          # Start Vite dev server on port 3000
-npm run build        # Build for production (runs sammy.js then vite build)
-npm run preview      # Preview production build locally
-npm start            # Production mode: run sammy.js + serve static files
+npm run build        # Run sammy.js (ASCII art) + production build → _static/
+npm start            # Run sammy.js + serve production build from _static/ on port 3000
+npm run preview      # Preview production build
 ```
 
-### Build Process
-The build has a **custom pre-build step** (`sammy.js`) that generates ASCII art branding. The output directory is `_static/` (not the default `dist/`).
+### Notes
+- `sammy.js` displays a colorful ASCII art logo before builds (do not modify)
+- Build output directory is `_static/` (not the default `dist/`)
+- Dev server runs on port 3000 (configured in vite.config.ts)
 
-### Testing
-Tests use React Testing Library with Jest:
-```bash
-npm test             # Run all tests
-```
+## Architecture
 
-## Architecture Overview
+### Routing (React Router v7)
+- Client-side routing via `BrowserRouter` in `App.tsx`
+- Routes:
+  - `/` → HomePage (landing page)
+  - `/opportunities` → OpportunitiesPage (job listings)
+  - `/about` → AboutPage
+  - `/dashboard` → Placeholder (not implemented)
+  - `*` → 404 Not Found
+- All routes wrapped with sticky Header and Footer using grid layout: `grid-rows-[auto_1fr_auto] min-h-screen`
 
-### User Roles & Access Control
-
-The application implements **role-based access control** with three distinct user types:
-
-1. **Admin** - Full system access, user management, analytics
-2. **Project Proponent** - Creates projects and job opportunities, manages applications
-3. **Contractor** - Creates job opportunities, manages applications and workforce
-
-**Critical**: The same user role can have different capabilities. For example, both Project Proponents AND Contractors can create jobs, but Project Proponents also manage Projects with contractor access permissions.
-
-### Context Providers (Global State)
-
-Two main context providers wrap the application:
+### State Management (Context API)
+Two global contexts, no Redux/Zustand:
 
 1. **AuthContext** (`src/contexts/AuthContext.tsx`)
-   - Manages authentication state via `localStorage` tokens (`accessToken`, `refreshToken`)
-   - Provides `user`, `userProfile`, role helpers (`isAdmin`, `isProjectProponent`, `isContractor`)
-   - Handles sign in/out, user session persistence
-   - **Important**: Authentication is checked on mount by reading tokens from localStorage
+   - User authentication state, profiles, role-based access
+   - User roles: admin, project_proponent, contractor
+   - Methods: signIn, signUp, signOut, refreshProfile
+   - Properties: user, userProfile, loading, isAdmin, isProjectProponent, isContractor
 
-2. **DarkModeContext** (`src/contexts/DarkModeContext.tsx`)
-   - Theme switching (dark/light mode)
-   - Persists preference to localStorage
-   - Applies `dark` class to `document.documentElement`
+2. **DarkModeContext** (`src/contexts/theme-toggle.tsx`)
+   - Theme switching with localStorage persistence (key: `"theme"`)
+   - Default: light mode
+   - Toggles `dark` class on `document.documentElement`
+   - Hook: `useDarkMode()`
 
-### Dashboard Architecture
-
-The application uses a **role-specific dashboard pattern**. Each role has a dedicated dashboard component:
-
-- `AdminDashboard.tsx` - 6 tabs: Users, Projects, Opportunities, Applications, Workforce, Analytics
-- `ProjectProponentDashboard.tsx` - 4 tabs: Projects, Opportunities, Applications, Workforce
-- `ContractorDashboard.tsx` - 3 tabs: Opportunities, Applications, Workforce
-
-**Key Pattern**: Dashboards use **modular tab components** from `src/components/interfaces/`:
-- `UsersTab.tsx`
-- `ProjectsTab.tsx`
-- `OpportunitiesTab.tsx`
-- `ApplicationsTab.tsx`
-- `WorkforceTab.tsx`
-- `AnalyticsTab.tsx`
-
-This separation allows tabs to be reused across different dashboards with different permissions.
-
-### Data Model Hierarchy
-
+### Component Organization
 ```
-Projects (created by Project Proponents)
-  └─> Jobs/Opportunities (linked to projects, created by Proponents or Contractors)
-      └─> Applications (submitted by users)
-          └─> Workforce Members (hired applicants)
+src/components/
+├── ui/              # ShadCN primitive components (Button, Card, Dialog, etc.)
+├── landing_v2/      # Current landing page sections (Hero, Features, Benefits, etc.)
+├── landing/         # Legacy landing components (v1)
+├── modals/          # Modal dialogs (JobDetailsModal)
+└── interfaces/      # Page-specific interface components
 ```
 
-**Access Control Layers**:
-- **Projects**: Can have `visibility_mode` of `all_contractors` or `selected_contractors`
-  - Project Proponents can grant/revoke contractor access via `project_contractor_access` table
-- **Jobs**: Can also have contractor-specific access controls
-  - Managed via `job_contractor_access` table
+**Pattern:**
+- Page components (`src/pages/`) compose section components
+- Section components use UI primitives + Lucide React icons
+- Modals: Parent manages open/closed state, modal component handles content
 
-### API Layer
+### Centralized Configuration
+**`src/config/theme.ts`** - Single source of truth for:
+- Brand colors (gold, forest green, deep blue, orange)
+- Background/text colors for light/dark modes
+- Typography (system fonts)
+- Branding (app name, tagline, contact info)
+- Navigation menu items
+- Layout constants (max-width, padding, nav height)
 
-**Missing from this codebase**: The API implementation is referenced but not present. Components import from `../../lib/api` but this directory doesn't exist in the source.
+**When changing branding, colors, or navigation, edit this file.**
 
-The API pattern used throughout:
+### Styling Approach
+- **Tailwind CSS v4** with `@tailwindcss/vite` plugin (modern approach)
+- Utility-first, no CSS modules or styled-components
+- Dark mode: class-based strategy via `@custom-variant dark (&:is(.dark *))`
+- Theme variables: OKLch color space defined in `src/index.css`
+- Custom border radius scale: sm, md, lg, xl, 2xl, 3xl, 4xl
+- Class merging: `cn()` utility function in `src/lib/utils.ts` (clsx + tailwind-merge)
+
+### UI Component Pattern (ShadCN)
+Components in `src/components/ui/` follow this pattern:
+- `React.forwardRef` for ref forwarding
+- Class Variance Authority (CVA) for variant definitions
+- Radix UI primitives for accessibility
+- `cn()` for Tailwind class composition
+
+Example variant usage:
 ```typescript
-const { data, error } = await apiModule.method()
-if (error) {
-  // Handle error using handleAPIError(error)
-}
-// Use data
+<Button variant="default" size="lg">Click me</Button>
 ```
 
-All API calls return `{ data, error }` tuples. The `handleAPIError()` function is imported but not implemented in this repo.
+### Animation Pattern (Framer Motion)
+- Library: Framer Motion v12.30.0
+- Common pattern:
+  ```typescript
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={isInView ? { opacity: 1, y: 0 } : {}}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+  >
+  ```
+- Use `useInView` hook for scroll-triggered animations
+- Staggered animations via delay multipliers
 
-### Theme System
+## File Structure Patterns
 
-Centralized theming in `src/config/theme.ts`:
-- **Brand Colors**: Raven-derived palette (Gold `#F8B818`, Forest Green `#607828`, Deep Blue `#184878`, Orange `#F09800`)
-- Tailwind CSS custom classes use these colors via CSS variables
-- The theme supports both light and dark modes with separate color definitions
+### Import Strategy
+- Relative imports for components: `import Header from './components/Header'`
+- Absolute imports for lib/config: `import { cn } from '@/lib/utils'`
+- Path alias `@/*` maps to `src/*` (configured in tsconfig.json + Vite)
 
-**Important**: When adding UI elements, reference `theme.colors` for consistency. Custom Tailwind classes like `bg-brand-primary`, `text-brand-primary`, `bg-brand-primary-hover` are used throughout.
+### Component Files
+- Naming: PascalCase for components (e.g., `HomePage.tsx`)
+- camelCase for utilities (e.g., `utils.ts`)
+- Functional components with hooks (no class components)
+- TypeScript interfaces for all component props
 
-### Modal Pattern
-
-The application uses a **compound modal pattern** with modals defined inline within dashboard components:
-- Job creation/edit modals
-- Application detail modals
-- Hire modals (convert application to workforce member)
-- Project access management modals
-
-Modals are controlled by boolean state flags (`showJobModal`, `showHireModal`, etc.) and render conditionally.
-
-### Excel Export Feature
-
-Multiple dashboards include Excel export functionality using `xlsx` library:
-- Export applications to `.xlsx` with full field mapping
-- Export includes data transformation (dates, booleans to Yes/No, etc.)
-- Auto-sizing columns based on content length
-
-## Component Organization
-
-```
-src/
-├── components/
-│   ├── dashboards/           # Role-specific dashboards
-│   │   ├── AdminDashboard.tsx
-│   │   ├── ContractorDashboard.tsx
-│   │   └── ProjectProponentDashboard.tsx
-│   ├── interfaces/           # Reusable tab components
-│   │   ├── UsersTab.tsx
-│   │   ├── ProjectsTab.tsx
-│   │   ├── OpportunitiesTab.tsx
-│   │   ├── ApplicationsTab.tsx
-│   │   ├── WorkforceTab.tsx
-│   │   └── AnalyticsTab.tsx
-│   ├── landing/              # Marketing pages (v1)
-│   ├── landing_v2/           # Marketing pages (v2 - newer)
-│   ├── Header.tsx            # App navigation
-│   ├── Footer.tsx
-│   ├── LandingPage.tsx
-│   ├── AboutPage.tsx
-│   ├── JobListings.tsx       # Public job board
-│   ├── JobCard.tsx
-│   ├── JobDetailModal.tsx
-│   ├── ApplicationModal.tsx  # Job application form
-│   └── LoginModal.tsx
-├── contexts/
-│   ├── AuthContext.tsx       # Authentication & user state
-│   └── DarkModeContext.tsx   # Theme state
-└── config/
-    └── theme.ts              # Centralized theme configuration
+### Page Exports
+Pages are centralized in `src/pages/index.ts` for clean imports:
+```typescript
+export { default as HomePage } from './HomePage'
+export { default as OpportunitiesPage } from './OpportunitiesPage'
 ```
 
-## Important Implementation Details
+## TypeScript Configuration
+- Target: ES2020
+- Module: ESNext
+- JSX: react-jsx (automatic runtime - no need to import React)
+- Strict mode: Disabled (allows loose typing)
+- Path alias: `@/*` → `src/*`
 
-### Authentication Flow
-1. User logs in → tokens stored in `localStorage`
-2. On page load, `AuthContext` checks for valid token
-3. If token exists, fetches current user + profile
-4. Invalid/expired tokens are cleared automatically
-5. Role-based routing happens in main App component
+## Data Management
+- **No backend yet:** Job data stored as static arrays in page components
+- **Future integration:** AuthContext prepared for backend API calls
+- Modal content: Defined inline in component files
 
-### Application to Workforce Pipeline
-When hiring an applicant:
-1. Application status updates to "hired"
-2. New `WorkforceMember` record created with link to original application
-3. Can assign to a job (may differ from job they applied to)
-4. Can assign to a project and location
-5. Track readiness level, skills assessment, employee number
+## Development Conventions
 
-### Project-Job Linking
-- Jobs can be linked to multiple projects via `project_ids` array
-- This creates a many-to-many relationship through a join table
-- Project Proponents can view all jobs linked to their projects
-- Contractors with project access can see and manage linked jobs
+### Code Style
+- Arrow functions for event handlers
+- JSDoc-style comments in config files
+- No emojis in code unless explicitly requested
+- Component props destructured in function signature
 
-## File Type Convention
+### Layout Patterns
+- Container max-width: `max-w-6xl` or `max-w-7xl`
+- Responsive padding: `px-4 sm:px-6 lg:px-8`
+- Vertical spacing: `py-12` or `py-20`
+- Grid/flex for layouts, avoid absolute positioning
 
-The codebase **mixes `.jsx`, `.js`, `.tsx`, and `.ts` files**:
-- New components with TypeScript use `.tsx`
-- Legacy/simple components use `.jsx`
-- Configuration files use `.js`
-- Context providers and newer features use `.tsx` with TypeScript types
+### Icons
+- Library: Lucide React v0.563.0
+- Import directly: `import { Menu, X, Search } from 'lucide-react'`
+- Customize via Tailwind classes
 
-When adding new files, prefer TypeScript (`.tsx` for components, `.ts` for utilities).
+### Links & Navigation
+- Use React Router's `<Link>` component, not `<a>` tags
+- Active link detection: `useLocation()` from React Router
+- Logo links: Navigate to home via `<Link to="/">`
 
-## Custom Build Configuration
+## Build Process
+```
+npm run build
+  ↓
+node sammy.js (displays ASCII art)
+  ↓
+vite build
+  ├─ Transpile TypeScript → JavaScript
+  ├─ Process JSX → React.createElement()
+  ├─ Bundle with Rollup
+  ├─ Process Tailwind (purge unused classes)
+  └─ Output to _static/
+```
 
-### Vite Config (`vite.config.js`)
-- Output directory: `_static` (not `dist`)
-- Dev server: port 3000
-- Uses `@vitejs/plugin-react`
+## Key Dependencies
+- **React 19.2.4** - UI framework
+- **React DOM 19.2.4** - React renderer for web
+- **React Router 7.13.0** - Client-side routing
+- **Tailwind CSS 4.1.18** - Utility-first CSS with Vite plugin
+- **Framer Motion 12.31.0** - Animations
+- **Radix UI** - Accessible UI primitives (dialog, dropdown, tabs, etc.)
+- **Lucide React 0.563.0** - Icon library
+- **Class Variance Authority 0.7.1** - Component variant management
+- **TypeScript 5.9.3** - Type safety
+- **Vite 7.3.1** - Build tool and dev server
 
-### Pre-build Script (`sammy.js`)
-Generates ASCII art branding displayed in console. This runs before both dev and production builds.
+## Future Extension Points
+- AuthContext ready for backend integration
+- Dashboard route exists at `/dashboard` (placeholder)
+- Multi-user roles prepared: admin, project_proponent, contractor
+- Modal framework established for additional dialogs
+- Both landing page versions (v1 and v2) available
 
-### DigitalOcean Deployment
-- Configured via `.do/app.yaml`
-- Deployed from `main` branch
-- Auto-deploy on push enabled
-- Build command: `npm run build` (which includes sammy.js)
-- Uses the `serve` package for static file serving
-
-## State Management Pattern
-
-No global state management library (Redux, Zustand, etc.) is used. State management follows this pattern:
-
-1. **Local component state** for UI interactions (modals, form inputs)
-2. **Context providers** for global concerns (auth, theme)
-3. **Prop drilling** for dashboard → tab component communication
-4. **Data fetching** happens in dashboard components, passed down as props
-
-Each dashboard loads all its data on mount with `Promise.all()` for parallel fetching.
-
-## Styling Approach
-
-- **Tailwind CSS** for all styling
-- **No CSS modules** or styled-components
-- Dark mode handled via Tailwind's `dark:` variant
-- Brand colors defined in `theme.ts` and mapped to Tailwind custom classes
-- Responsive design with Tailwind breakpoints (`sm:`, `md:`, `lg:`)
-
-## Indigenous Engagement Features
-
-This application has specialized fields for Indigenous participation tracking:
-- Self-identification as Indigenous
-- Band affiliation
-- Indigenous community contact information
-- Interest in community monitor roles
-- Tracking Indigenous participation for ESG reporting
-
-When working with application or workforce data, be mindful of these sensitive fields and their reporting implications.
+## Important Notes
+- Build output is `_static/`, not `dist/`
+- Dev server always runs on port 3000
+- Dark mode default is **light** (not dark)
+- Theme changes: Edit `src/config/theme.ts`
+- Job data is currently hardcoded (no database yet)
+- **React 19 Update**: Project uses React 19.2.4 with automatic JSX runtime (no need to import React)
+- **Tailwind v4**: Uses `@tailwindcss/vite` plugin (configured in vite.config.ts), not PostCSS plugin
