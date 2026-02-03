@@ -19,11 +19,7 @@ function getInitialTheme(): Theme {
     return stored;
   }
 
-  // 2) System preference fallback
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    return "dark";
-  }
-
+  // 2) Default to light theme
   return "light";
 }
 
