@@ -22,7 +22,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.13.0",
-    "react-scripts": "^5.0.1",
     "serve": "^14.2.4",
     "tailwind-merge": "^3.4.0"
   },
@@ -31,21 +30,6 @@
     "build": "node sammy.js && vite build",
     "preview": "vite preview",
     "start": "node sammy.js && npx serve -s _static -l 3000 -n"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.23.4",
