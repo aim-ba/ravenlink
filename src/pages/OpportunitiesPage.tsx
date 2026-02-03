@@ -9,9 +9,9 @@ import { useState } from 'react';
 const jobs = [
   {
     id: 1,
-    title: "Indigenous Professionals - Various Positions",
+    title: "Indigenous Employment Program - Various Positions",
     company: "Enbridge",
-    location: "Across Canada",
+    location: "Savona, BC",
     type: "Full-time",
     union: "Non-union",
     category: "Multiple Departments",
@@ -56,63 +56,7 @@ const jobs = [
     ],
     companyWebsite: "www.enbridge.com"
   },
-  {
-    id: 2,
-    title: "Indigenous Monitor - Sunrise Expansion Program",
-    company: "Westcoast Energy (Enbridge)",
-    location: "Various worksites in British Columbia",
-    type: "Contract",
-    union: "Non-union",
-    category: "Pipeline Operations",
-    salaryRange: "Varies with experience",
-    closingDate: "March 31, 2026",
-    postedDate: "1 week ago",
-    isActive: true,
-    featured: true,
-    description: "Temporary Indigenous monitors needed to ensure environmental and cultural values are protected during pipeline construction.",
-    fullDescription: "Westcoast Energy Limited Partnership is seeking temporary Indigenous monitors for the Sunrise Expansion Program. The Project involves pipeline loops and additional compression along the southern section of the Westcoast natural gas pipeline system, from southwest of Chetwynd to the Canada-United States border near Sumas, B.C.",
-    about: "The Indigenous monitor observes, identifies, and reports potential risks to land, water, wildlife, and culturally sensitive areas during construction. Working daily with an Indigenous coordinator and construction crew, monitors integrate Indigenous knowledge and traditional land use considerations into field monitoring.",
-    preferredCandidate: true,
-    preferredText: "Subcontractor opportunity for Indigenous group or affiliated company. Individuals with deep knowledge of local Indigenous cultural values are encouraged to apply.",
-    positions: [
-      {
-        category: "Key Responsibilities",
-        roles: [
-          "Observe and document construction activities to ensure protection of environmental and cultural values",
-          "Act as liaison between Indigenous communities and Project team",
-          "Provide daily written reports for submission to Indigenous coordinator",
-          "Share observations and Indigenous knowledge with construction crew"
-        ]
-      },
-      {
-        category: "Qualifications",
-        roles: [
-          "Deep knowledge of local Indigenous cultural values (encouraged)",
-          "Strong observational, communication, and reporting skills",
-          "Experience with construction, field work, or linear projects (asset)",
-          "Physically fit, able to hike in steep and rough terrain all day",
-          "Pass drug and alcohol pre-access test within 30 days prior to access"
-        ]
-      },
-      {
-        category: "Work Schedule",
-        roles: [
-          "10-12 hours per day, up to 6 days per week on rotation",
-          "Work rotation decided by Indigenous group or affiliated company",
-          "Approximate start: April – June 2026",
-          "Travel and accommodation will be provided"
-        ]
-      }
-    ],
-    benefits: [
-      "All safety training provided (Enbridge Contractor Safety Orientation, Ground Disturbance, Wildlife Awareness, etc.)",
-      "Personal Protective Equipment (PPE) provided if necessary",
-      "Travel and accommodation provided",
-      "No prior technical experience required",
-      "Special assistance may be arranged with advanced notice"
-    ],
-    companyWebsite: "www.enbridge.com"
-  },
+  
 ];
 
 const categories = ["All", "Engineering", "Information Systems", "Pipeline Operations", "Accounting", "Business"];

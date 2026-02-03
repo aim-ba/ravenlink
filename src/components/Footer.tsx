@@ -17,7 +17,7 @@ export function Footer() {
               <img
                 src="/RAVEN_LOGOS/RavenMountains_V1.png"
                 alt="Raven Logo"
-                className="h-16 w-auto mb-4"
+                className="h-32 w-auto mb-4"
               />
             </Link>
             <p className="text-muted-foreground leading-relaxed text-sm">

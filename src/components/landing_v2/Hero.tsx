@@ -24,7 +24,7 @@ export function Hero({ onBrowseJobs }: HeroProps) {
             transition={{ duration: 0.5 }}
             className="space-y-8"
           >
-            <Badge variant="outline" className="w-fit">
+            <Badge variant="outline" className="w-fit px-2 py-2">
               <Users className="w-3 h-3 mr-2" />
               Indigenous Engagement Platform
             </Badge>
