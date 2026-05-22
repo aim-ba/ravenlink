@@ -60,7 +60,7 @@ export function Benefits() {
             Benefits
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-            Why organizations choose Raven
+            Why organizations choose Raven Link<sup className="text-sm font-normal align-super">®</sup>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A complete solution for Indigenous engagement and ESG reporting

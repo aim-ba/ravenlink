@@ -10,7 +10,7 @@ const partners = [
     LogoComponent: EnbridgeLogo
   },
   {
-    name: "AiM Land and Environment",
+    name: "AiM Land Services",
     type: "img" as const,
     lightSrc: "/logos/AIM-Logo-Black.png",
     darkSrc: "/logos/AIM-Logo-White.png"

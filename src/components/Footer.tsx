@@ -14,18 +14,21 @@ export function Footer() {
           {/* LEFT COLUMN - Logo & Description */}
           <div className="space-y-4 text-center sm:text-left">
             <Link to="/" className="inline-block">
-              <img
-                src="/RAVEN_LOGOS/RavenMountains_V1.png"
-                alt="Raven Logo"
-                className="h-20 sm:h-24 lg:h-32 w-auto mb-4 mx-auto sm:mx-0"
-              />
+              <div className="relative inline-block">
+                <img
+                  src="/RAVEN_LOGOS/RavenMountains_V1.png"
+                  alt="Raven Link® Logo"
+                  className="h-20 sm:h-24 lg:h-32 w-auto mb-4 mx-auto sm:mx-0"
+                />
+                <span className="absolute bottom-6 -right-2 text-[14px] font-bold text-foreground leading-none">®</span>
+              </div>
             </Link>
             <p className="text-muted-foreground leading-relaxed text-sm">
               Facilitating meaningful Indigenous engagement and transparent ESG reporting
               for major infrastructure projects.
             </p>
             <p className="text-muted-foreground/70 text-xs">
-              Powered by AiM Land and Environment
+              Powered by AiM Land Services
             </p>
           </div>
 
@@ -56,7 +59,7 @@ export function Footer() {
                   to="/about"
                   className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block"
                 >
-                  About Raven
+                  About Raven Link<sup className="text-xs font-normal align-super">®</sup>
                 </Link>
               </li>
             </ul>
@@ -80,7 +83,7 @@ export function Footer() {
               <div className="flex items-start gap-3 justify-center sm:justify-start">
                 <Globe className="w-4 h-4 text-primary flex-shrink-0 mt-1" />
                 <div className="text-sm">
-                  <p className="font-medium text-foreground">AiM Land and Environment</p>
+                  <p className="font-medium text-foreground">AiM Land Services</p>
                   <p className="text-muted-foreground text-xs mt-1">
                     Indigenous engagement and ESG solutions
                   </p>
@@ -94,12 +97,9 @@ export function Footer() {
         <Separator className="mt-6 sm:mt-8" />
 
         {/* Bottom Bar */}
-        <div className="mt-6 sm:mt-8 text-center">
+        <div className="mt-6 sm:mt-6 text-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} AiM Land and Environment. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground/70 mt-2">
-            Indigenous Opportunities & Contracting System (Raven)
+            &copy; {currentYear} AiM Land Services. All rights reserved.
           </p>
         </div>
       </div>

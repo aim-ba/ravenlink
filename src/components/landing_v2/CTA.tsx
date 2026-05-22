@@ -56,7 +56,7 @@ export function CTA({ onGetStarted }: CTAProps) {
           </div>
 
           <div className="pt-8 text-sm text-background/70">
-            Powered by AiM Land and Environment • Trusted by Indigenous Communities
+            Powered by AiM Land Services • Trusted by Indigenous Communities
           </div>
         </motion.div>
       </div>

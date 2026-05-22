@@ -57,30 +57,40 @@ export function Features() {
           className="text-center mb-20"
         >
           <div className="text-sm font-semibold text-primary mb-6 tracking-wider uppercase">
-            The RAVEN Framework
+            The RAVEN LINK® FRAMEWORK
           </div>
 
           {/* Large RAVEN letters */}
-          <div className="flex justify-center items-center gap-3 mb-8">
-            {pillars.map((pillar, index) => {
-              return (
-                <motion.div
-                  key={pillar.letter}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg"
-                  style={{
-                    background: `linear-gradient(to bottom right, var(--${pillar.chartColor}), var(--${pillar.chartColor}))`,
-                    opacity: 0.9
-                  }}
-                >
-                  <span className="text-3xl font-bold text-white">
-                    {pillar.letter}
-                  </span>
-                </motion.div>
-              );
-            })}
+          <div className="flex flex-col items-center mb-8">
+            <div className="flex justify-center items-center gap-3 mb-2">
+              {pillars.map((pillar, index) => {
+                return (
+                  <motion.div
+                    key={pillar.letter}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg"
+                    style={{
+                      background: `linear-gradient(to bottom right, var(--${pillar.chartColor}), var(--${pillar.chartColor}))`,
+                      opacity: 0.9
+                    }}
+                  >
+                    <span className="text-3xl font-bold text-white">
+                      {pillar.letter}
+                    </span>
+                  </motion.div>
+                );
+              })}
+            </div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+              className="text-sm font-semibold tracking-widest text-primary uppercase"
+            >
+              Link<sup className="text-[9px] align-super">®</sup>
+            </motion.p>
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">

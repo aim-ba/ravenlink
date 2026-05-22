@@ -31,11 +31,14 @@ export function Header() {
             className="flex items-center hover:opacity-80 transition-opacity"
             onClick={closeMobileMenu}
           >
-            <img
-              src="/RAVEN_LOGOS/RavenMountains_V1.png"
-              alt="Raven Logo"
-              className="h-10 sm:h-12 w-auto"
-            />
+            <div className="relative inline-block">
+              <img
+                src="/RAVEN_LOGOS/RavenMountains_V1.png"
+                alt="Raven Link® Logo"
+                className="h-10 sm:h-12 w-auto"
+              />
+              <span className="absolute bottom-0 -right-2 text-[11px] font-bold text-foreground leading-none">®</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation Links - Hidden on mobile */}

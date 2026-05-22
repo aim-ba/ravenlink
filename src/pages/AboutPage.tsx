@@ -7,7 +7,7 @@ export function AboutPage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-            About Raven
+            About Raven Link<sup className="text-sm font-normal align-super">®</sup>
           </h1>
           <p className="text-xl text-muted-foreground">
             Indigenous Opportunities & Contracting System
@@ -26,7 +26,7 @@ export function AboutPage() {
               <h2 className="text-3xl font-bold text-foreground">Our Mission</h2>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-              Raven is dedicated to facilitating meaningful Indigenous engagement and
+              Raven Link<sup className="text-xs font-normal align-super">®</sup> is dedicated to facilitating meaningful Indigenous engagement and
               transparent ESG reporting for major infrastructure projects across the region.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -73,7 +73,7 @@ export function AboutPage() {
               <h3 className="text-xl font-semibold text-foreground">Operated by AiM</h3>
             </div>
             <p className="text-muted-foreground mb-4">
-              AiM Land and Environment is committed to supporting Indigenous communities
+              AiM Land Services is committed to supporting Indigenous communities
               through innovative technology solutions and meaningful engagement opportunities.
             </p>
             <div className="text-sm text-muted-foreground">

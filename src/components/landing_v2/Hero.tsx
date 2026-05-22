@@ -118,7 +118,7 @@ export function Hero({ onBrowseJobs }: HeroProps) {
                       <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 bg-white rounded-xl p-3 lg:p-4 border-2 border-dashed border-border">
                         <img
                           src={QRCodeSVG}
-                          alt="Scan to access Raven platform"
+                          alt="Scan to access Raven Link® platform"
                           className="w-full h-full object-contain"
                         />
                       </div>

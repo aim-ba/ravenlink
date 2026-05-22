@@ -77,7 +77,7 @@ export const theme = {
 
   // Branding
   branding: {
-    appName: 'Raven',
+    appName: 'Raven Link®',
     appFullName: 'Indigenous Opportunities & Contracting System',
     tagline: 'Building Relationships. Creating Opportunities.',
     description:
@@ -91,7 +91,7 @@ export const theme = {
     main: [
       { id: 'home', label: 'Home', path: '/' },
       { id: 'jobs', label: 'Opportunities', path: '/jobs' },
-      { id: 'about', label: 'About Raven', path: '/about' },
+      { id: 'about', label: 'About Raven Link®', path: '/about' },
     ],
   },
 
